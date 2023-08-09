@@ -1,18 +1,20 @@
 pipeline {
     agent any 
     environment {
-    DOCKERHUB_CREDENTIALS = credentials('docker-hub-saikumar313')
+    DOCKERHUB_CREDENTIALS = credentials('docker-hub-ramakanthgoud')
     }
     stages { 
         stage('SCM Checkout') {
             steps{
-            git 'https://github.com/sai-313/nodejs-demo.git'
+            git 'https://github.com/ramakanth1997/jenkinscicd.git'
             }
         }
 
+ 
+
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t saikumar313/nodeapp:$BUILD_NUMBER .'
+                sh 'docker build -t ramakanthgoud/nodeapp1:$BUILD_NUMBER .'
             }
         }
         stage('login to dockerhub') {
@@ -22,17 +24,17 @@ pipeline {
         }
         stage('push image') {
             steps{
-                sh 'docker push saikumar313/nodeapp:$BUILD_NUMBER'
+                sh 'docker push ramakanthgoud/nodeapp1:$BUILD_NUMBER'
             }
         }
         stage('pull image') {
             steps{
-                sh 'docker pull saikumar313/nodeapp:$BUILD_NUMBER'
+                sh 'docker pull ramakanthgoud/nodeapp1:$BUILD_NUMBER'
             }
         }
       stage('run image') {
             steps{
-                sh 'docker run -d -p 443:80 saikumar313/nodeapp:$BUILD_NUMBER'
+                sh 'docker run -d -p 80:80 ramakanthgoud/nodeapp:$BUILD_NUMBER'
             }
         }   
 }
@@ -42,4 +44,3 @@ post {
         }
     }
 }
-
